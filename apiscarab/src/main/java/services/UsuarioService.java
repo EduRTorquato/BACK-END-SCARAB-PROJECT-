@@ -4,12 +4,11 @@
  */
 package services;
 
-import java.net.http.HttpResponse;
+import enums.Grupo;
 import java.util.List;
 import models.Usuario;
 import models.UsuarioLogin;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import repository.UsuarioRepository;
@@ -48,6 +47,10 @@ public class UsuarioService {
     //Cadastro de usuários
     public Usuario cadastroUsuario(Usuario usuario) {
         usuario.setSenha(encoder.encode(usuario.getSenha()));
+
+        //Define um valor padrão para os atributos Grupo e Ativo
+        usuario.setActive(1);
+        usuario.setGrupo(Grupo.ESTOQUISTA);
         return usuarioRepository.save(usuario);
     }
 
@@ -80,6 +83,14 @@ public class UsuarioService {
     public Usuario activeUser(Usuario usuario) {
         Usuario ativarUsuario = buscaPorEmail(usuario.getEmail());
         ativarUsuario.setActive(1);
+        usuarioRepository.save(ativarUsuario);
+        return ativarUsuario;
+    }
+
+    //Desativa usuário no sistema
+    public Usuario deactivateUser(Usuario usuario) {
+        Usuario ativarUsuario = buscaPorEmail(usuario.getEmail());
+        ativarUsuario.setActive(0);
         usuarioRepository.save(ativarUsuario);
         return ativarUsuario;
     }

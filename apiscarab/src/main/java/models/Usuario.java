@@ -4,6 +4,7 @@
  */
 package models;
 
+import enums.Grupo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -42,10 +43,6 @@ public class Usuario {
     @Column(nullable = false)
     private Grupo grupo;
 
-    private enum Grupo {
-        ESTOQUISTA,
-        ADMINISTRADOR
-    }
 
     public String getCpf() {
         return cpf;
