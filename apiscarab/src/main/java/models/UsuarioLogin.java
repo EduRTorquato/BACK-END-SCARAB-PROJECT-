@@ -9,9 +9,18 @@ package models;
  * @author eduar
  */
 public class UsuarioLogin {
-    
+
     private String email;
     private String senha;
+    private boolean active;
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     public String getEmail() {
         return email;
@@ -28,6 +37,5 @@ public class UsuarioLogin {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
-    
+
 }

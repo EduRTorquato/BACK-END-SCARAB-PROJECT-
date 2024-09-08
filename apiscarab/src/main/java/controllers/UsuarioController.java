@@ -64,9 +64,11 @@ public class UsuarioController {
     // * Login de usuário
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody UsuarioLogin usuario) {
-
+        
         if (usuarioService.userLogin(usuario) == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário não existe na base de dados, ou credenciais estão erradas!");
+        }else if(usuarioService.isUserActive(usuario.getEmail())){
+            return ResponseEntity.status(HttpStatus.LOCKED).body("Usuário está inativo na base de dados!");
         }
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Login realizado!");
@@ -82,7 +84,7 @@ public class UsuarioController {
     // *Desativa usuário no sistema
     @PutMapping("/desativar")
     public ResponseEntity<Object> deactivateUser(@RequestBody Usuario usuario) {
-        usuarioService.activeUser(usuario);
+        usuarioService.deactivateUser(usuario);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Usuário desativado na base dados!");
     }
 

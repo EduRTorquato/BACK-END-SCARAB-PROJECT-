@@ -79,6 +79,10 @@ public class UsuarioService {
         return usuarioRepository.existsByCpf(cpf);
     }
 
+    public boolean isUserActive(String email) {
+        return usuarioRepository.findByEmail(email).getActive() == 0;
+    }
+
     //Ativa usuário no sistema
     public Usuario activeUser(Usuario usuario) {
         Usuario ativarUsuario = buscaPorEmail(usuario.getEmail());
