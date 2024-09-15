@@ -52,6 +52,12 @@ public class UsuarioService {
         usuario.setActive(1);
         return usuarioRepository.save(usuario);
     }
+    
+    //Altrar usuários
+    public Usuario alteraUsuario(Usuario usuario){
+        usuario.setSenha(encoder.encode(usuario.getSenha()));
+        return usuarioRepository.save(usuario);
+    }
 
     //Login de usuários
     public UsuarioLogin userLogin(UsuarioLogin usuario) {

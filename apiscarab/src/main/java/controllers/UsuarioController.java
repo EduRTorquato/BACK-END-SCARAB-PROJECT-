@@ -61,13 +61,19 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Usuário cadastrado com sucesso!");
     }
 
+    @PutMapping
+    public ResponseEntity<Object> alterar(@RequestBody Usuario usuario) {
+        usuarioService.alteraUsuario(usuario);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Usuário alterado com sucesso!");
+    }
+
     // * Login de usuário
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody UsuarioLogin usuario) {
-        
+
         if (usuarioService.userLogin(usuario) == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário não existe na base de dados, ou credenciais estão erradas!");
-        }else if(usuarioService.isUserActive(usuario.getEmail())){
+        } else if (usuarioService.isUserActive(usuario.getEmail())) {
             return ResponseEntity.status(HttpStatus.LOCKED).body("Usuário está inativo na base de dados!");
         }
 
