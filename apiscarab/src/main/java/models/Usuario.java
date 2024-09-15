@@ -92,4 +92,9 @@ public class Usuario {
         this.grupo = grupo;
     }
 
+    public Long getId() {
+        return id;
+    }
+    
+
 }

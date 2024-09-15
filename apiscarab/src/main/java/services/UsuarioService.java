@@ -50,7 +50,6 @@ public class UsuarioService {
 
         //Define um valor padrão para os atributos Grupo e Ativo
         usuario.setActive(1);
-        usuario.setGrupo(Grupo.ESTOQUISTA);
         return usuarioRepository.save(usuario);
     }
 
