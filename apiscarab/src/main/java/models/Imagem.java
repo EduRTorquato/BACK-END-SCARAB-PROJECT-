@@ -29,20 +29,25 @@ public class Imagem {
     private String url;
 
     @Column(nullable = false)
-    private int principal;
+    private boolean principal;
 
     // Associação com Produto
     @ManyToOne
     @JoinColumn(name = "produto_id", nullable = false)
     private Produto produto;
 
-    // Construtores, getters e setters
     public Imagem() {
+    }
+
+    public Imagem(Imagem imagem, Produto produto) {
+        this.url = imagem.url;
+        this.principal = imagem.isPrincipal();
+        this.produto = produto;
     }
 
     public Long getId() {
         return id;
-    }
+    } 
 
     public String getUrl() {
         return url;
@@ -52,8 +57,20 @@ public class Imagem {
         return produto;
     }
 
-    public Imagem(String url, Produto produto) {
-        this.url = url;
+    public void setProduto(Produto produto) {
         this.produto = produto;
     }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public boolean isPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(boolean principal) {
+        this.principal = principal;
+    }
+
 }

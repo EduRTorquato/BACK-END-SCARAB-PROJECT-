@@ -4,13 +4,25 @@
  */
 package repository;
 
+import java.util.List;
 import models.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author eduar
  */
-public interface ProdutoRepository extends JpaRepository<Produto, Long>{
+@Repository
+public interface ProdutoRepository extends JpaRepository<Produto, Long> {
+
+    @Query(value = "CALL BuscarProdutosPorNome(:name)", nativeQuery = true)
+    List<Produto> findByNome(@Param("name") String name);
     
+
+    @Query(value = "SELECT * FROM produtos ORDER BY id DESC", nativeQuery = true)
+    List<Produto> findAllOrderByIdDesc();
+
 }

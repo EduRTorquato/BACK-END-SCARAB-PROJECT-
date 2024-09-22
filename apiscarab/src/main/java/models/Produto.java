@@ -8,7 +8,6 @@ package models;
  *
  * @author eduar
  */
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,47 +29,47 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(nullable = false, length = 200)
     private String nome;
 
-    
     @Column(nullable = false)
     private Double avaliacao;
 
     @Column(length = 2000)
     private String descricao;
 
-
     @Column(nullable = false)
-    private BigDecimal preco;
+    private Double preco;
 
-    
     @Column(nullable = false)
     private Integer quantidadeEstoque;
+    
+    @Column(nullable = false)
+    private boolean ativo;
 
     // Associação com Imagens
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Imagem> imagens;
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Imagem> imagens = new ArrayList<>();
 
     // Construtores, getters e setters
     public Produto() {
+
     }
 
-    public Produto(String nome, Double avaliacao, String descricao, BigDecimal preco, Integer quantidadeEstoque) {
+    public Produto(String nome, Double avaliacao, String descricao, Double preco, Integer quantidadeEstoque, boolean ativo) {
         this.nome = nome;
         this.avaliacao = avaliacao;
         this.descricao = descricao;
         this.preco = preco;
         this.quantidadeEstoque = quantidadeEstoque;
+        this.ativo = ativo;
     }
 
     // Getters e setters para todos os campos...
-
     public Long getId() {
         return id;
     }
-   
+
     public String getNome() {
         return nome;
     }
@@ -94,11 +94,11 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public BigDecimal getPreco() {
+    public Double getPreco() {
         return preco;
     }
 
-    public void setPreco(BigDecimal preco) {
+    public void setPreco(Double preco) {
         this.preco = preco;
     }
 
@@ -110,6 +110,14 @@ public class Produto {
         this.quantidadeEstoque = quantidadeEstoque;
     }
 
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
     public List<Imagem> getImagens() {
         return imagens;
     }
@@ -119,4 +127,5 @@ public class Produto {
     }
     
     
+
 }
