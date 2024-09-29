@@ -8,16 +8,15 @@ package models;
  *
  * @author eduar
  */
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,11 +48,12 @@ public class Produto {
 
     // Associação com Imagens
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Imagem> imagens = new ArrayList<>();
-
-    // Construtores, getters e setters
-    public Produto() {
-
+    
+    
+    public Produto(){
+        
     }
 
     public Produto(String nome, Double avaliacao, String descricao, Double preco, Integer quantidadeEstoque, boolean ativo) {

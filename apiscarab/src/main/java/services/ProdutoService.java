@@ -4,19 +4,18 @@
  */
 package services;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import DTOs.ImagemDTO;
+
 import java.util.List;
+import java.util.Optional;
 import models.Imagem;
 import models.Produto;
-import models.Usuario;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+
 import repository.ImageRepository;
 import repository.ProdutoRepository;
 
@@ -30,70 +29,47 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    @Autowired
-    private ImageRepository imageRepository;
-
-    private ImageService imageService;
-
     public List<Produto> buscaProdutos() {
         return produtoRepository.findAllOrderByIdDesc();
     }
-    
-    public List<Produto> buscaProdutoPorNome(String nome){
+
+    public List<Produto> buscaProdutoPorNome(String nome) {
         return produtoRepository.findByNome(nome);
     }
-    
 
-
+    //SALVA PRODUTO E IMAGENS
     public Produto salvaProduto(Produto produto) {
-        System.out.print(produto);
 
+        // Validação: Garantir que apenas uma imagem é principal
+        List<Imagem> imagens = produto.getImagens();
+
+        long countPrincipais = imagens.stream().filter(Imagem::isPrincipal).count();
+        if (countPrincipais > 1) {
+            throw new IllegalArgumentException("Apenas uma imagem pode ser marcada como principal.");
+        }
+
+        // Associar cada imagem ao produto
+        if (imagens != null) {
+            imagens.forEach(imagem -> imagem.setProduto(produto));
+            produto.setImagens(imagens);
+        }
+        
+        produto.setAtivo(true);
         return produtoRepository.save(produto);
     }
 
-    public void salvarImagensParaProduto(Produto produto, MultipartFile[] files) {
-        for (MultipartFile file : files) {
-            // Salvar arquivo no sistema de arquivos
-            String caminhoImagem = salvarImagemNoSistemaDeArquivos(file);
-
-            // Criar a entidade Imagem e associar ao produto
-            Imagem imagem = new Imagem();
-
-            imagem.setUrl(caminhoImagem);
-            imagem.setProduto(produto);
-
-            // Salvar a imagem no banco de dados
-            imageService.salva(imagem);
-        }
-    }
-
-    private String salvarImagemNoSistemaDeArquivos(MultipartFile file) {
-        try {
-            // Definir o caminho para salvar a imagem (ex: /imagens/produto/)
-            String diretorio = "C:\\Users\\eduar\\OneDrive\\Área de Trabalho\\FRONT-END 4 Semestre\\FRONT-END-SCARAB-PROJECT\\pi 4 semestre\\IMAGENS\\imgUpload";
-            String nomeArquivo = file.getOriginalFilename();
-            Path caminho = Paths.get(diretorio + nomeArquivo);
-
-            // Salvar a imagem no caminho especificado
-            Files.copy(file.getInputStream(), caminho, StandardCopyOption.REPLACE_EXISTING);
-
-            // Retornar o caminho da imagem que será salvo no banco
-            return caminho.toString();
-        } catch (IOException e) {
-            throw new RuntimeException("Erro ao salvar a imagem", e);
-        }
-    }
-
     //Ativa produto no sistema
-    public Produto ativaProduto(Produto produto) {
-       
+    public Produto ativaProduto(Long id) {
+        Produto produto = produtoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado com id: " + id));
         produto.setAtivo(true);
         produtoRepository.save(produto);
+
         return produto;
     }
 
     //Desativa produto no sistema
-    public Produto desativaProduto(Produto produto) {
+    public Produto desativaProduto(Long id) {
+        Produto produto = produtoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado com id: " + id));
         produto.setAtivo(false);
         produtoRepository.save(produto);
         return produto;

@@ -4,6 +4,8 @@
  */
 package services;
 
+import jakarta.transaction.Transactional;
+import java.util.List;
 import models.Imagem;
 import org.springframework.beans.factory.annotation.Autowired;
 import repository.ImageRepository;
@@ -19,6 +21,11 @@ public class ImageService {
 
     public Imagem salva(Imagem imagem) {
         return imgRepository.save(imagem);
+    }
+    @Transactional
+    public void salvarImagens(List<Imagem> imagens) {
+        // Implementar validações e lógica adicional, se necessário
+        imgRepository.saveAll(imagens);
     }
 
 }

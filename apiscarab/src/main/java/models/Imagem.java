@@ -4,8 +4,10 @@
  */
 package models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,32 +27,46 @@ public class Imagem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String url;
+    private String caminho;
 
-    @Column(nullable = false)
     private boolean principal;
 
-    // Associação com Produto
-    @ManyToOne
-    @JoinColumn(name = "produto_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "produto_id")
+    @JsonBackReference
     private Produto produto;
 
+    // Construtores
     public Imagem() {
     }
 
-    public Imagem(Imagem imagem, Produto produto) {
-        this.url = imagem.url;
-        this.principal = imagem.isPrincipal();
-        this.produto = produto;
+    public Imagem(String caminho, boolean principal) {
+        this.caminho = caminho;
+        this.principal = principal;
     }
 
     public Long getId() {
         return id;
-    } 
+    }
 
-    public String getUrl() {
-        return url;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCaminho() {
+        return caminho;
+    }
+
+    public void setCaminho(String caminho) {
+        this.caminho = caminho;
+    }
+
+    public boolean isPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(boolean principal) {
+        this.principal = principal;
     }
 
     public Produto getProduto() {
@@ -61,16 +77,6 @@ public class Imagem {
         this.produto = produto;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public boolean isPrincipal() {
-        return principal;
-    }
-
-    public void setPrincipal(boolean principal) {
-        this.principal = principal;
-    }
+    
 
 }
