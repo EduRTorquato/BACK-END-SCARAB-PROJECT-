@@ -3,20 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package services;
-
-import DTOs.ImagemDTO;
-
 import java.util.List;
-import java.util.Optional;
 import models.Imagem;
 import models.Produto;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
 import org.springframework.stereotype.Service;
-
-import repository.ImageRepository;
 import repository.ProdutoRepository;
 
 /**
