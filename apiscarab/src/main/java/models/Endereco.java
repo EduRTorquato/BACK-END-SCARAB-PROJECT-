@@ -33,6 +33,9 @@ public class Endereco {
     private String bairro;
     private String cidade;
     private String uf;
+    private boolean principal;
+    
+    
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id")
@@ -103,5 +106,15 @@ public class Endereco {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    public boolean isPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(boolean principal) {
+        this.principal = principal;
+    }
+    
+    
 
 }

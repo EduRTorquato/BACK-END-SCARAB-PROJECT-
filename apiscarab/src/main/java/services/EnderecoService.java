@@ -23,6 +23,10 @@ public class EnderecoService {
         return enderecoRepository.findAll();
     }
     
+    public Endereco salvaEndereco(Endereco endereco){
+        return enderecoRepository.save(endereco);
+    }
+    
     
     
 }
