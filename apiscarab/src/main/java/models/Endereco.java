@@ -4,15 +4,10 @@
  */
 package models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
@@ -34,17 +29,11 @@ public class Endereco {
     private String cidade;
     private String uf;
     private boolean principal;
-    
-    
+    private Long clienteId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id")
-    @JsonBackReference
-    private Cliente cliente;
-
-    @JsonProperty("clienteId")
+    
     public Long getClienteId() {
-        return cliente != null ? cliente.getId() : null;
+        return clienteId;
     }
 
     public Long getId() {
@@ -99,12 +88,12 @@ public class Endereco {
         this.uf = uf;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Long getCliente() {
+        return clienteId;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setCliente(Long cliente) {
+        this.clienteId = cliente;
     }
 
     public boolean isPrincipal() {

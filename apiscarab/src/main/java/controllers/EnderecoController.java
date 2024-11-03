@@ -6,10 +6,13 @@ package controllers;
 
 import java.util.List;
 import models.Endereco;
+import models.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +26,7 @@ import services.EnderecoService;
 @RestController
 @Controller
 @RequestMapping("/endereco")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class EnderecoController {
 
     @Autowired
@@ -37,6 +41,11 @@ public class EnderecoController {
     public ResponseEntity criarCliente(@RequestBody Endereco endereco) {
         enderecoService.salvaEndereco(endereco);
         return ResponseEntity.status(org.springframework.http.HttpStatus.ACCEPTED).body("Usuário cadastrado com sucesso!");
+    }
+    
+    @GetMapping("/{id}")
+    public List<Endereco> enderecoPorId(@PathVariable(value = "id") Long id) {
+        return enderecoService.buscaEnderecoPorId(id);
     }
 
 }

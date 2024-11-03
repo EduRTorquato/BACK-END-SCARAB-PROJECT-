@@ -27,6 +27,10 @@ public class EnderecoService {
         return enderecoRepository.save(endereco);
     }
     
+    public List<Endereco> buscaEnderecoPorId(Long id){
+        return enderecoRepository.findAddressByUser(id);
+    }
+    
     
     
 }

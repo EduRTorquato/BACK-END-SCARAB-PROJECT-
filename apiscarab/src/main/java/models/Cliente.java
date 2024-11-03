@@ -4,16 +4,14 @@
  */
 package models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.CascadeType;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.Date;
-import java.util.List;
+
 
 /**
  *
@@ -38,18 +36,6 @@ public class Cliente {
     private Date dataNasc;
 
     private String senha;
-
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
-    private List<Endereco> enderecos;
-
-    public List<Endereco> getEnderecos() {
-        return enderecos;
-    }
-
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
-    }
 
     public Long getId() {
         return id;

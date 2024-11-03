@@ -4,8 +4,12 @@
  */
 package repository;
 
+import java.util.List;
 import models.Endereco;
+import models.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
@@ -13,4 +17,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
     
+    @Query(value = "CALL GET_ADDRESS_USER(:id)", nativeQuery = true)
+    List<Endereco> findAddressByUser(@Param("id") Long id);
 }
