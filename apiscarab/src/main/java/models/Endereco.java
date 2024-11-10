@@ -30,7 +30,15 @@ public class Endereco {
     private String uf;
     private boolean principal;
     private Long clienteId;
+    private String rua;
 
+    public String getRua() {
+        return rua;
+    }
+
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
     
     public Long getClienteId() {
         return clienteId;
