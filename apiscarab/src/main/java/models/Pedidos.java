@@ -35,6 +35,16 @@ public class Pedidos {
     
     private String metodoPgto;
 
+    public String getMetodoPgto() {
+        return metodoPgto;
+    }
+
+    public void setMetodoPgto(String metodoPgto) {
+        this.metodoPgto = metodoPgto;
+    }
+
+    
+    
     public Long getId() {
         return id;
     }

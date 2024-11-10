@@ -24,4 +24,8 @@ public class PedidosService {
         return pedidoRepository.findAll();
     }
     
+    public Pedidos createPedido(Pedidos pedido){
+        return pedidoRepository.save(pedido);
+    }
+    
 }

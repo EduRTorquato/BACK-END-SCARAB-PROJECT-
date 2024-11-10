@@ -5,6 +5,7 @@
 package services;
 
 import java.util.List;
+import java.util.Optional;
 import models.Cliente;
 import models.ClienteLogin;
 import models.Usuario;
@@ -52,6 +53,11 @@ public class ClienteService {
     //RETORNA UM USUÁRIO PELO EMAIL
     public Cliente buscaPorEmail(String email) {
         return clienteRepository.findByEmail(email);
+    }
+
+    //RETORNA UM USUÁRIO PELO ID
+    public Optional<Cliente> buscaPorId(Long id) {
+        return clienteRepository.findById(id);
     }
 
 }

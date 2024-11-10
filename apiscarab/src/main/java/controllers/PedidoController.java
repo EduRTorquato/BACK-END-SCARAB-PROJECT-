@@ -5,19 +5,18 @@
 package controllers;
 
 import java.util.List;
-import models.Endereco;
-import models.Produto;
+import models.Pedidos;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import services.EnderecoService;
+import services.PedidosService;
 
 /**
  *
@@ -25,27 +24,24 @@ import services.EnderecoService;
  */
 @RestController
 @Controller
-@RequestMapping("/endereco")
+@RequestMapping("/pedidos")
 @CrossOrigin(origins = "http://127.0.0.1:5500")
-public class EnderecoController {
-
+public class PedidoController {
+    
     @Autowired
-    private EnderecoService enderecoService;
-
+    private PedidosService pedidoService;
+    
     @GetMapping
-    public List<Endereco> findAllAddress() {
-        return enderecoService.buscaEnderecos();
-    }
-
-    @PostMapping
-    public ResponseEntity criarEndereco(@RequestBody Endereco endereco) {
-        enderecoService.salvaEndereco(endereco);
-        return ResponseEntity.status(org.springframework.http.HttpStatus.ACCEPTED).body("Endereço cadastrado com sucesso!");
+    public List<Pedidos> findAll (){
+        return pedidoService.findAll();
     }
     
-    @GetMapping("/{id}")
-    public List<Endereco> enderecoPorId(@PathVariable(value = "id") Long id) {
-        return enderecoService.buscaEnderecoPorId(id);
+    
+    @PostMapping
+    public ResponseEntity salvaPedido(@RequestBody Pedidos pedido){        
+        pedidoService.createPedido(pedido);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Pedido Salvo com sucesso!");
     }
-
+    
+    
 }

@@ -5,6 +5,7 @@
 package controllers;
 
 import java.util.List;
+import java.util.Optional;
 import models.Cliente;
 import models.ClienteLogin;
 import models.Usuario;
@@ -36,7 +37,7 @@ public class ClienteController {
     public ClienteController(PasswordEncoder encoder) {
         this.encoder = encoder;
     }
-    
+
     @Autowired
     private ClienteService clienteService;
 
@@ -58,12 +59,16 @@ public class ClienteController {
         }
         return ResponseEntity.status(org.springframework.http.HttpStatus.ACCEPTED).body("Login realizado!");
     }
-    
-    
+
     // * Encontra usuário por email
     @GetMapping("/email/{email}")
     public Cliente listaPorEmail(@PathVariable(value = "email") String email) {
         return clienteService.buscaPorEmail(email);
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Cliente> clienteId(@PathVariable(value = "id") Long id) {
+        return clienteService.buscaPorId(id);
     }
 
 }
