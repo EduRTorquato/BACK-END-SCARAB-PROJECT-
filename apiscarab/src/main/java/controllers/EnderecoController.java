@@ -5,6 +5,7 @@
 package controllers;
 
 import java.util.List;
+import java.util.Optional;
 import models.Endereco;
 import models.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +44,13 @@ public class EnderecoController {
         return ResponseEntity.status(org.springframework.http.HttpStatus.ACCEPTED).body("Endereço cadastrado com sucesso!");
     }
     
-    @GetMapping("/{id}")
-    public List<Endereco> enderecoPorId(@PathVariable(value = "id") Long id) {
-        return enderecoService.buscaEnderecoPorId(id);
+    @GetMapping("cliente/{id}")
+    public List<Endereco> enderecoPorUserId(@PathVariable(value = "id") Long id) {
+        return enderecoService.buscaEnderecoPorUserId(id);
     }
-
+    
+    @GetMapping("/{id}")
+     public Optional<Endereco> enderecoPorId(@PathVariable(value = "id") Long id) {
+        return enderecoService.buscaEnderecoPorId(id);
+     }
 }

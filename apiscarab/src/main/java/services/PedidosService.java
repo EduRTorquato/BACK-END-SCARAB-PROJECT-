@@ -24,6 +24,11 @@ public class PedidosService {
         return pedidoRepository.findAll();
     }
     
+    public List<Pedidos> findByUserId(Long id ){
+        
+        return pedidoRepository.findByUserId(id);
+    }
+    
     public Pedidos createPedido(Pedidos pedido){
         return pedidoRepository.save(pedido);
     }

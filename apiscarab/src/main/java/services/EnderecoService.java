@@ -5,6 +5,7 @@
 package services;
 
 import java.util.List;
+import java.util.Optional;
 import models.Endereco;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +28,12 @@ public class EnderecoService {
         return enderecoRepository.save(endereco);
     }
     
-    public List<Endereco> buscaEnderecoPorId(Long id){
+    public List<Endereco> buscaEnderecoPorUserId(Long id){
         return enderecoRepository.findAddressByUser(id);
+    }
+    
+    public Optional<Endereco> buscaEnderecoPorId(Long id){
+        return enderecoRepository.findById(id);
     }
     
     

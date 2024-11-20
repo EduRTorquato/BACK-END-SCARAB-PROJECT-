@@ -19,4 +19,6 @@ public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
     
     @Query(value = "CALL GET_ADDRESS_USER(:id)", nativeQuery = true)
     List<Endereco> findAddressByUser(@Param("id") Long id);
+    
+    
 }

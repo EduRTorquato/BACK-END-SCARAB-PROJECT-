@@ -4,13 +4,20 @@
  */
 package repository;
 
+import java.util.List;
 import models.Pedidos;
+import models.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
  * @author eduar
  */
 public interface PedidoRepository extends JpaRepository<Pedidos, Long> {
-    
+
+    @Query(value = "CALL GET_ORDERS_USER(:id)", nativeQuery = true)
+    List<Pedidos> findByUserId(@Param("id") Long id);
+
 }
