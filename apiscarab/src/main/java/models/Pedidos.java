@@ -4,6 +4,7 @@
  */
 package models;
 
+import enums.Status;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,6 +35,17 @@ public class Pedidos {
     private double valorCompra;
     
     private String metodoPgto;
+    
+    private Status status;
+
+    
+    public Status getStatus() {
+        return status;  
+    }
+    
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     public String getMetodoPgto() {
         return metodoPgto;
