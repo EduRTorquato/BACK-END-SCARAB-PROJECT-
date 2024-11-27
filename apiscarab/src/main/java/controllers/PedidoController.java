@@ -6,9 +6,11 @@ package controllers;
 
 import enums.Status;
 import java.util.List;
+import java.util.stream.Collectors;
 import models.Endereco;
 import models.Pedidos;
 import models.Produto;
+import models.ProdutoPedidos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +50,7 @@ public class PedidoController {
 
     @PostMapping
     public ResponseEntity salvaPedido(@RequestBody Pedidos pedido) {
-        pedido.setStatus(Status.PREPARACAO);
+        pedido.setStatus(Status.AGUARDANDOPGTO); 
         pedidoService.createPedido(pedido);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Pedido Salvo com sucesso!");
     }

@@ -9,8 +9,10 @@ package enums;
  * @author eduar
  */
 public enum Status {
-    PREPARACAO,
-    ENVIADO,
-    FINALIZADO,
-    AGUARDANDOPGTO
+    AGUARDANDOPGTO,
+    PGTOREJEITADO,
+    PGTOAPROVADO,
+    AGUARDANDORETIRADA,
+    EMTRANSITO, 
+    ENTREGUE,
 }

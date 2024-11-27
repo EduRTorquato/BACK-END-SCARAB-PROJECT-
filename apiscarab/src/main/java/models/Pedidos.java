@@ -3,15 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package models;
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import enums.Status;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.List;
 /**
  *
  * @author eduar
@@ -19,7 +22,7 @@ import java.util.Date;
 @Entity
 @Table(name = "pedidos")
 public class Pedidos {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,22 +30,27 @@ public class Pedidos {
     private int enderecoId;
 
     private Long clientId;
-    
+
     private Date dataCompra;
 
     private int qtdItens;
-    
+
     private double valorCompra;
-    
+
     private String metodoPgto;
-    
+
     private Status status;
 
-    
+    // Associação com produtos
+    @OneToMany(mappedBy = "pedidos", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<ProdutoPedidos> produtos;    
+
+
     public Status getStatus() {
-        return status;  
+        return status;
     }
-    
+
     public void setStatus(Status status) {
         this.status = status;
     }
@@ -55,8 +63,6 @@ public class Pedidos {
         this.metodoPgto = metodoPgto;
     }
 
-    
-    
     public Long getId() {
         return id;
     }
@@ -104,9 +110,13 @@ public class Pedidos {
     public void setValorCompra(double valorCompra) {
         this.valorCompra = valorCompra;
     }
-    
-    
-    
-    
+
+    public List<ProdutoPedidos> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<ProdutoPedidos> produtos) {
+        this.produtos = produtos;
+    }
     
 }

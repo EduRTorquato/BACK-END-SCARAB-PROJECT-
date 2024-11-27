@@ -8,6 +8,7 @@ import enums.Status;
 import java.util.List;
 import models.Pedidos;
 import models.Produto;
+import models.ProdutoPedidos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.PedidoRepository;
@@ -32,6 +33,16 @@ public class PedidosService {
     }
 
     public Pedidos createPedido(Pedidos pedido) {
+        
+       //Definir cada produto para pedidos.
+       List<ProdutoPedidos> produtosPedidos = pedido.getProdutos();
+       
+       //Associar cada produto ao pedido.
+       if(produtosPedidos != null){
+           produtosPedidos.forEach(produto -> produto.setPedidos(pedido));
+           pedido.setProdutos(produtosPedidos);
+       }
+        
         return pedidoRepository.save(pedido);
     }
 
