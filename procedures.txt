@@ -1,0 +1,30 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GET_PRODUCT`(usuario text)
+BEGIN
+	 SELECT * FROM dbscarab.produtos WHERE produtos.nome like 'b%';
+END
+
+-------------------------------------------------------------------------
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GET_ORDERS_USER`(userId INTEGER)
+BEGIN
+	SELECT pedidos.* FROM pedidos RIGHT JOIN cliente
+    ON cliente.id = pedidos.client_id
+    WHERE cliente.id = userId;
+END
+
+-------------------------------------------------------------------------
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GET_ALUGUEL_USER`(usuario text)
+BEGIN
+	SELECT * from produtos
+	where produtos.nome LIKE text;
+END
+
+-------------------------------------------------------------------------
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GET_ADDRESS_USER`(userid INTEGER)
+BEGIN
+	SELECT endereco.* FROM endereco RIGHT JOIN cliente
+    ON cliente.id = endereco.cliente_id
+    WHERE cliente.id= userid;
+END
